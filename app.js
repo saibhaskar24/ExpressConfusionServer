@@ -7,6 +7,8 @@ var session = require('express-session');
 var FileStore = require('session-file-store')(session);
 const mongoose = require('mongoose');
 var passport = require('passport');
+var config = require('./config');
+
 var authenticate = require('./authenticate');
 const Dishes = require('./models/dishes');
 
@@ -50,20 +52,8 @@ app.use(session({
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+// const url = config.mongoUrl;
 
-function auth (req, res, next) {
-  console.log(req.user);
-
-  if (!req.user) {
-    var err = new Error('You are not authenticated!');
-    err.status = 403;
-    next(err);
-  }
-  else {
-        next();
-  }
-}
-app.use(auth);
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
